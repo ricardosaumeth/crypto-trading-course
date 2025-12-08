@@ -123,10 +123,6 @@ core/
 ```
 redux/
 ├── store.ts            # Store configuration
-├── hooks.ts           # Typed Redux hooks
-└── middleware/        # Custom middleware
-    ├── logger.ts      # Development logging
-    └── persistence.ts # State persistence
 ```
 
 **Store Configuration**:
