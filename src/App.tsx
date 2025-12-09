@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Provider, useDispatch } from "react-redux"
-import getStore, { type AppDispatch } from "@modules/app/redux/store"
+import getStore, { type AppDispatch } from "@modules/redux/store"
 import { bootstrapApp } from "@modules/app/slice"
 
 const store = getStore()
