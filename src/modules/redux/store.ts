@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { appBootstrapSlice } from "../slice"
+import { appBootstrapSlice } from "@modules/app/slice"
 
 let storeInstance: ReturnType<typeof createStore> | null = null
 
