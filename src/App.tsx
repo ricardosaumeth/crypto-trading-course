@@ -16,7 +16,11 @@ const AppContent = () => {
 }
 
 function App() {
-  return <h1>Cryto App</h1>
+  return (
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
+  )
 }
 
 export default App
