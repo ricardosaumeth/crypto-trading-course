@@ -1,8 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import type { Connection } from "@core/transport/Connection"
 
-export const bootstrapApp = createAsyncThunk("app/bootstrap", async (_, {}) => {
-  return true
-})
+export const bootstrapApp = createAsyncThunk(
+  "app/bootstrap",
+  async (_, { _dispatch, _getState, extra }) => {
+    const { connection } = extra as { connection: Connection }
+    connection.connect()
+    return true
+  }
+)
 
 export const appBootstrapSlice = createSlice({
   name: "app/bootstrap",
