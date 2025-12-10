@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit"
 import { appBootstrapSlice } from "@modules/app/slice"
 import { WsConnectionProxy } from "@core/transport/WsConnectionProxy"
 import { Connection } from "@core/transport/Connection"
+import { changeConnectionStatus, subscriptionsSlice } from "@core/transport/slice"
+import { ConnectionStatus } from "@core/transport/types/ConnectionStatus"
 
 const connectionProxy = new WsConnectionProxy(
   import.meta.env["VITE_BITFINEX_WS_URL"] || "wss://api-pub.bitfinex.com/ws/2"
@@ -15,6 +17,7 @@ function createStore() {
   const store = configureStore({
     reducer: {
       app: appBootstrapSlice.reducer,
+      subscriptions: subscriptionsSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
@@ -25,10 +28,12 @@ function createStore() {
   })
 
   connection.onConnect(() => {
+    store.dispatch(changeConnectionStatus(ConnectionStatus.Connected))
     console.log("Connected")
   })
 
   connection.onClose(() => {
+    store.dispatch(changeConnectionStatus(ConnectionStatus.Disconnected))
     console.log("Disconnected - will auto-reconnect")
   })
 
