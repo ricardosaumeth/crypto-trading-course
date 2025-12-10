@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { Connection } from "@core/transport/Connection"
 import { ConnectionStatus } from "@core/transport/types/ConnectionStatus"
 import type { RootState } from "@modules/redux/store"
+import { refDataLoad } from "@modules/refence-data/slice"
+import { selectCurrencyPair } from "@modules/selection/slice"
 
 const CHECK_CONNECTION_TIMEOUT_IN_MS = 100
 
@@ -20,12 +22,13 @@ const waitForConnection = (getState: () => RootState): Promise<void> => {
 
 export const bootstrapApp = createAsyncThunk(
   "app/bootstrap",
-  async (_, { _dispatch, getState, extra }) => {
+  async (_, { dispatch, getState, extra }) => {
     const { connection } = extra as { connection: Connection }
     connection.connect()
     await waitForConnection(getState as () => RootState)
-    // fetch our currrencies
-    return true
+    const currencyPairs = await dispatch(refDataLoad()).unwrap()
+    dispatch(selectCurrencyPair({ currencyPair: currencyPairs[0] }))
+    return currencyPairs[0]
   }
 )
 
