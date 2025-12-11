@@ -4,8 +4,11 @@ import { ConnectionStatus } from "@core/transport/types/ConnectionStatus"
 import type { RootState } from "@modules/redux/store"
 import { refDataLoad } from "@modules/refence-data/slice"
 import { selectCurrencyPair } from "@modules/selection/slice"
+import { candlesSubscribeToSymbol, tickerSubscribeToSymbol } from "@core/transport/slice"
 
 const CHECK_CONNECTION_TIMEOUT_IN_MS = 100
+export const SUBSCRIPTION_TIMEOUT_IN_MS = 2000
+export const DEFAULT_TIMEFRAME = "1m"
 
 const waitForConnection = (getState: () => RootState): Promise<void> => {
   return new Promise((resolve) => {
@@ -28,6 +31,13 @@ export const bootstrapApp = createAsyncThunk(
     await waitForConnection(getState as () => RootState)
     const currencyPairs = await dispatch(refDataLoad()).unwrap()
     dispatch(selectCurrencyPair({ currencyPair: currencyPairs[0] }))
+    // Subscribe to ticker and candles for all currency pairs with delays
+    currencyPairs.forEach((currencyPair: string) => {
+      setTimeout(() => {
+        dispatch(tickerSubscribeToSymbol({ symbol: currencyPair }))
+        dispatch(candlesSubscribeToSymbol({ symbol: currencyPair, timeframe: DEFAULT_TIMEFRAME }))
+      }, SUBSCRIPTION_TIMEOUT_IN_MS)
+    })
     return currencyPairs[0]
   }
 )
