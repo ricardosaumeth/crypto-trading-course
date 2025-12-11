@@ -1,4 +1,4 @@
-import { tradeSubscribeToSymbol } from "@core/transport/slice"
+import { bookSubscribeToSymbol, tradeSubscribeToSymbol } from "@core/transport/slice"
 import { SUBSCRIPTION_TIMEOUT_IN_MS } from "@modules/app/slice"
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
@@ -22,6 +22,7 @@ export const selectCurrencyPair = createAsyncThunk(
       return new Promise<void>((resolve) => {
         setTimeout(() => {
           dispatch(tradeSubscribeToSymbol({ symbol: currencyPair }))
+          dispatch(bookSubscribeToSymbol({ symbol: currencyPair, prec: "R0" }))
           resolve()
         }, SUBSCRIPTION_TIMEOUT_IN_MS)
       })
