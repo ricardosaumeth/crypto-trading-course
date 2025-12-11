@@ -35,6 +35,10 @@ const createSubscribeThunk = (channel: ChannelTypes, actionType: SubscriptionAct
       case Channel.CANDLES:
         msg.key = `trade:${timeframe}:t${symbol}`
         break
+      case Channel.BOOK:
+        msg.prec = prec
+        msg.symbol = `t${symbol}`
+        break  
       default:
         console.warn("Unhandled channel:", channel)
     }
@@ -58,6 +62,11 @@ export const tradeSubscribeToSymbol = createSubscribeThunk(
   SubscriptionActionType.SUBSCRIBE_TO_TRADES
 )
 
+export const bookSubscribeToSymbol = createSubscribeThunk(
+  Channel.BOOK,
+  SubscriptionActionType.SUBSCRIBE_TO_BOOK
+)
+
 export const subscriptionsSlice = createSlice({
   name: "subscriptions",
   initialState,
@@ -76,6 +85,9 @@ export const subscriptionsSlice = createSlice({
       })
       .addCase(tradeSubscribeToSymbol.fulfilled, (_state, action) => {
         console.log(`Subscribed to trade ${JSON.stringify(action.payload)}`)
+      })
+      .addCase(bookSubscribeToSymbol.fulfilled, (_state, action) => {
+        console.log(`Subscribed to book ${JSON.stringify(action.payload)}`)
       })
   },
 })
