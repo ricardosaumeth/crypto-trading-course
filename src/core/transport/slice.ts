@@ -29,6 +29,7 @@ const createSubscribeThunk = (channel: ChannelTypes, actionType: SubscriptionAct
 
     switch (channel) {
       case Channel.TICKER:
+      case Channel.TRADES:  
         msg.symbol = `t${symbol}`
         break
       case Channel.CANDLES:
@@ -52,6 +53,11 @@ export const candlesSubscribeToSymbol = createSubscribeThunk(
   SubscriptionActionType.SUBSCRIBE_TO_CANDLES
 )
 
+export const tradeSubscribeToSymbol = createSubscribeThunk(
+  Channel.TRADES,
+  SubscriptionActionType.SUBSCRIBE_TO_TRADES
+)
+
 export const subscriptionsSlice = createSlice({
   name: "subscriptions",
   initialState,
@@ -67,6 +73,9 @@ export const subscriptionsSlice = createSlice({
       })
       .addCase(candlesSubscribeToSymbol.fulfilled, (_state, action) => {
         console.log(`Subscribed to candle ${JSON.stringify(action.payload)}`)
+      })
+      .addCase(tradeSubscribeToSymbol.fulfilled, (_state, action) => {
+        console.log(`Subscribed to trade ${JSON.stringify(action.payload)}`)
       })
   },
 })
