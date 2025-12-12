@@ -13,7 +13,6 @@ const initialState: CurrencyPairState = {
 export const selectCurrencyPair = createAsyncThunk(
   "selection/selectCurrencyPair",
   async ({ currencyPair }: { currencyPair: string }, { dispatch, rejectWithValue }) => {
-    
     try {
       dispatch(selectionSlice.actions.setCurrencyPair({ currencyPair }))
       // The original code returned immediately while setTimeout was still pending,

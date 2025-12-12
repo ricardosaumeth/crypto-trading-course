@@ -29,7 +29,7 @@ const createSubscribeThunk = (channel: ChannelTypes, actionType: SubscriptionAct
 
     switch (channel) {
       case Channel.TICKER:
-      case Channel.TRADES:  
+      case Channel.TRADES:
         msg.symbol = `t${symbol}`
         break
       case Channel.CANDLES:
@@ -38,12 +38,12 @@ const createSubscribeThunk = (channel: ChannelTypes, actionType: SubscriptionAct
       case Channel.BOOK:
         msg.prec = prec
         msg.symbol = `t${symbol}`
-        break  
+        break
       default:
         console.warn("Unhandled channel:", channel)
     }
 
-    connection.send(msg)
+    connection.send(JSON.stringify(msg))
     return msg
   })
 
