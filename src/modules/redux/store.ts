@@ -7,6 +7,7 @@ import { ConnectionStatus } from "@core/transport/types/ConnectionStatus"
 import { refDataSlice } from "@modules/refence-data/slice"
 import { selectionSlice } from "@modules/selection/slice"
 import { createWsMiddleware } from "@core/transport/wsMiddleware"
+import { tickerSlice } from "@modules/tickers/slice"
 
 const connectionProxy = new WsConnectionProxy(
   import.meta.env["VITE_BITFINEX_WS_URL"] || "wss://api-pub.bitfinex.com/ws/2"
@@ -23,6 +24,7 @@ function createStore() {
       subscriptions: subscriptionsSlice.reducer,
       refData: refDataSlice.reducer,
       selection: selectionSlice.reducer,
+      ticker: tickerSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
