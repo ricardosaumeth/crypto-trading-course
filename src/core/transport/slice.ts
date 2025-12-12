@@ -5,7 +5,21 @@ import { SubscriptionActionType, type SubscriptionActionTypes } from "./types/Ac
 import type { Connection } from "./Connection"
 import type { SubscribeMsg } from "./types/SubscribeMsg"
 
+export type requestSubscribeToChannelAck = {
+  channel: string
+  event?: string
+  symbol?: string
+  key?: string
+  prec?: string
+}
+
 export interface SubscriptionState {
+  [channelId: number]: {
+    isStale: boolean
+    lastUpdate?: number
+    channel: string
+    request: requestSubscribeToChannelAck
+  }
   wsConnectionStatus: ConnectionStatus
 }
 
@@ -74,6 +88,17 @@ export const subscriptionsSlice = createSlice({
     changeConnectionStatus: (state, action: PayloadAction<ConnectionStatus>) => {
       state.wsConnectionStatus = action.payload
     },
+    subscribeToChannelAck: (
+      state,
+      action: PayloadAction<{
+        channelId: number
+        channel: ChannelTypes
+        request: requestSubscribeToChannelAck
+      }>
+    ) => {
+      const { channelId, channel, request } = action.payload
+      state[channelId] = { channel, request, isStale: false }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -92,5 +117,5 @@ export const subscriptionsSlice = createSlice({
   },
 })
 
-export const { changeConnectionStatus } = subscriptionsSlice.actions
+export const { changeConnectionStatus, subscribeToChannelAck } = subscriptionsSlice.actions
 export default subscriptionsSlice.reducer
