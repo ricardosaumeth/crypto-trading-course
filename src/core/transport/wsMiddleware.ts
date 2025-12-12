@@ -1,6 +1,7 @@
 import type { Middleware } from "@reduxjs/toolkit"
 import { Connection } from "./Connection"
 import {
+  handleBookData,
   handleCandlesData,
   handleSubscriptionAck,
   handleTickerData,
@@ -26,7 +27,7 @@ export const createWsMiddleware = (connection: Connection): Middleware => {
           return
         }
 
-        console.log(store.getState().candles)
+        console.log(store.getState().book)
 
         switch (subscription.channel) {
           case Channel.TRADES:
@@ -42,7 +43,7 @@ export const createWsMiddleware = (connection: Connection): Middleware => {
             break
 
           case Channel.BOOK:
-            //handleBookData(parsedData, subscription, store.dispatch)
+            handleBookData(parsedData, subscription, store.dispatch)
             break
 
           default:
