@@ -9,6 +9,7 @@ import { selectionSlice } from "@modules/selection/slice"
 import { createWsMiddleware } from "@core/transport/wsMiddleware"
 import { tickerSlice } from "@modules/tickers/slice"
 import { tradesSlice } from "@modules/trades/slice"
+import { candleSlice } from "@modules/candles/slice"
 
 const connectionProxy = new WsConnectionProxy(
   import.meta.env["VITE_BITFINEX_WS_URL"] || "wss://api-pub.bitfinex.com/ws/2"
@@ -27,6 +28,7 @@ function createStore() {
       selection: selectionSlice.reducer,
       ticker: tickerSlice.reducer,
       trades: tradesSlice.reducer,
+      candles: candleSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
