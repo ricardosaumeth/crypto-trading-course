@@ -27,8 +27,6 @@ export const createWsMiddleware = (connection: Connection): Middleware => {
           return
         }
 
-        console.log(store.getState().book)
-
         switch (subscription.channel) {
           case Channel.TRADES:
             handleTradesData(parsedData, subscription, store.dispatch)
