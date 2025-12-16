@@ -4,7 +4,7 @@ import Palette from "./theme/style"
 export const Container = styled.div`
   position: absolute;
   inset: 0;
-  background-color: ${Palette.White};
+  background-color: ${Palette.BackgroundColor};
   width: 100vw;
   height: 100vh;
   overflow: hidden;
