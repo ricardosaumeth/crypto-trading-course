@@ -1,5 +1,7 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
+import "./config/agGridConfig"
+import "ag-grid-community/styles/ag-theme-quartz.css"
 import "./index.css"
 import App from "./App.tsx"
 
