@@ -15,6 +15,7 @@ import {
   TradesPanel,
 } from "./App.styled"
 import CandlesChart from "@modules/candles/components"
+import Trades from "@modules/trades/components"
 
 const store = getStore()
 
@@ -31,7 +32,9 @@ const AppContent = () => {
         <Header>Crypto App</Header>
         <TickersPanel>tickers</TickersPanel>
         <MarketPanel>market</MarketPanel>
-        <TradesPanel>trades</TradesPanel>
+        <TradesPanel>
+          <Trades />
+        </TradesPanel>
         <CandlesPanel>
           <CandlesChart />
         </CandlesPanel>
