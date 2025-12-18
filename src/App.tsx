@@ -16,6 +16,7 @@ import {
 } from "./App.styled"
 import CandlesChart from "@modules/candles/components"
 import Trades from "@modules/trades/components"
+import DepthChart from "@modules/book/components/DepthChart"
 
 const store = getStore()
 
@@ -39,7 +40,9 @@ const AppContent = () => {
           <CandlesChart />
         </CandlesPanel>
         <BookPanel>book</BookPanel>
-        <DepthPanel>depth</DepthPanel>
+        <DepthPanel>
+          <DepthChart />
+        </DepthPanel>
         <Footer>
           <span>Latency</span>
           <span>Diagnostic</span>
