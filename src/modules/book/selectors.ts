@@ -6,16 +6,6 @@ const MAX_LEVELS = 25
 
 const bookSelector = (state: RootState) => state.book
 
-export const getRawBook = createSelector(
-  [bookSelector, (_: RootState, symbol: string) => symbol],
-  (book, symbol) => book[symbol]
-)
-
-// [
-//     { bid: { price: 100 }, ask: { price: 101 }, depth: 0 },
-//     { bid: { price: 99 }, ask: { price: 102 }, depth: 1 },
-//     { bid: { price: 98 }, ask: undefined, depth: 2 }
-// ]
 export const getBook = createSelector(
   [bookSelector, (_: RootState, symbol: string) => symbol],
   (book, symbol) => {
@@ -33,8 +23,8 @@ export const getBook = createSelector(
       }
     }
 
-    bids.sort((a, b) => b.price - a.price) // sorted descending by price (highest bid first)
-    asks.sort((a, b) => a.price - b.price) // sorted ascending by price (lowest ask first)
+    bids.sort((a, b) => b.price - a.price)
+    asks.sort((a, b) => a.price - b.price)
 
     const limitedBids = bids.slice(0, MAX_LEVELS)
     const limitedAsks = asks.slice(0, MAX_LEVELS)
