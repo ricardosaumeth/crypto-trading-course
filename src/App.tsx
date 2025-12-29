@@ -17,6 +17,7 @@ import {
 import CandlesChart from "@modules/candles/components"
 import Trades from "@modules/trades/components"
 import DepthChart from "@modules/book/components/DepthChart"
+import Book from "@modules/book/components/Book"
 
 const store = getStore()
 
@@ -39,7 +40,9 @@ const AppContent = () => {
         <CandlesPanel>
           <CandlesChart />
         </CandlesPanel>
-        <BookPanel>book</BookPanel>
+        <BookPanel>
+          <Book />
+        </BookPanel>
         <DepthPanel>
           <DepthChart />
         </DepthPanel>
