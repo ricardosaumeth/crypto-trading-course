@@ -1,5 +1,11 @@
-import { bookSubscribeToSymbol, tradeSubscribeToSymbol } from "@core/transport/slice"
+import {
+  bookSubscribeToSymbol,
+  tradeSubscribeToSymbol,
+  unsubscribeFromTradesAndBook,
+} from "@core/transport/slice"
+import { Channel } from "@core/transport/types/Channels"
 import { SUBSCRIPTION_TIMEOUT_IN_MS } from "@modules/app/slice"
+import type { RootState } from "@modules/redux/store"
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 interface CurrencyPairState {
@@ -12,8 +18,30 @@ const initialState: CurrencyPairState = {
 
 export const selectCurrencyPair = createAsyncThunk(
   "selection/selectCurrencyPair",
-  async ({ currencyPair }: { currencyPair: string }, { dispatch, rejectWithValue }) => {
+  async ({ currencyPair }: { currencyPair: string }, { dispatch, getState, rejectWithValue }) => {
     try {
+      const state = getState() as RootState
+      const previousPair = state.selection.currencyPair
+
+      if (previousPair && previousPair !== currencyPair) {
+        const unsubPromises = Object.entries(state.subscriptions)
+          .filter(([chanId]) => {
+            const sub = state.subscriptions[Number(chanId)]
+            return sub?.channel === Channel.TRADES || sub?.channel === Channel.BOOK
+          })
+          .map(async ([chanId]) => {
+            try {
+              return await dispatch(unsubscribeFromTradesAndBook(chanId)).unwrap()
+            } catch (error) {
+              console.warn(`Failed to unsubscribe from channel ${chanId}:`, error)
+              return null
+            }
+          })
+        // Promise.allSettled waits for all operations to complete regardless of
+        // individual failures, ensuring cleanup always happens.
+        await Promise.allSettled(unsubPromises)
+      }
+
       dispatch(selectionSlice.actions.setCurrencyPair({ currencyPair }))
       // The original code returned immediately while setTimeout was still pending,
       // creating a race condition. The new version properly waits for the timeout
