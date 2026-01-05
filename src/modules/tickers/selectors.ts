@@ -48,6 +48,10 @@ export const getVisibleCurrencyPairTickers = createSelector(
         .filter((pair): pair is string => pair !== undefined)
     }
 
+    // example: If selectedCurrencyPairIndex = 5, then:
+    // range(5 - 2, 5 + 3) = range(3, 8)
+    // [3, 4, 5, 6, 7]
+
     return {
       currencyPairs,
       selectedCurrencyPairIndex,

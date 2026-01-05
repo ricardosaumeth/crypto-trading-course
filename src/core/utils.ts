@@ -7,14 +7,11 @@
 export const getValueAt =
   <T>(values: T[]) =>
   (index: number): T | undefined => {
-    if (!Array.isArray(values) || values.length === 0) {
-      return undefined
-    }
-    if (!Number.isInteger(index)) {
-      return undefined
-    }
+    if (values.length === 0) return undefined
 
-    // Handle circular indexing for negative numbers
-    const normalizedIndex = ((index % values.length) + values.length) % values.length
+    const len = values.length
+    // It ensures the result is always between: 0 and len - 1
+    const normalizedIndex = ((index % len) + len) % len
+
     return values[normalizedIndex]
   }

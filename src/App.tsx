@@ -19,6 +19,7 @@ import Trades from "@modules/trades/components"
 import DepthChart from "@modules/book/components/DepthChart"
 import Book from "@modules/book/components/Book"
 import Market from "@modules/tickers/components/Market"
+import Tickers from "@modules/tickers/components/Tickers"
 
 const store = getStore()
 
@@ -33,7 +34,9 @@ const AppContent = () => {
     <Container>
       <Content>
         <Header>Crypto App</Header>
-        <TickersPanel>tickers</TickersPanel>
+        <TickersPanel>
+          <Tickers />
+        </TickersPanel>
         <MarketPanel>
           <Market />
         </MarketPanel>
