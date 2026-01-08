@@ -10,7 +10,6 @@ export default defineConfig({
       "@core": path.resolve(__dirname, "./src/core"),
       "@modules": path.resolve(__dirname, "./src/modules"),
       "@theme": path.resolve(__dirname, "./src/theme"),
-      "@services": path.resolve(__dirname, "./src/services"),
     },
   },
 })

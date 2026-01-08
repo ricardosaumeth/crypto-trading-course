@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { performanceTracker } from "@services/performanceTracker"
+import { performanceTracker } from "@modules/services/performanceTracker"
 import { Channel } from "../transport/types/Channels"
 
 const ConnectionHealth = {

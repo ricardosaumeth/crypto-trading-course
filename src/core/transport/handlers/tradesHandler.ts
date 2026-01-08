@@ -1,6 +1,6 @@
 import { tradesSnapshotReducer, tradesUpdateReducer } from "@modules/trades/slice"
 import type { RawTrade, Trade } from "@modules/trades/types/Trade"
-import { performanceTracker } from "@services/performanceTracker"
+import { performanceTracker } from "@modules/services/performanceTracker"
 import { Channel } from "../types/Channels"
 
 export const handleTradesData = (parsedData: any[], subscription: any, dispatch: any) => {

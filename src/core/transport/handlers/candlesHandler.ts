@@ -1,6 +1,6 @@
 import { candlesSnapshotReducer, candlesUpdateReducer } from "@modules/candles/slice"
 import { getLookupKey } from "@modules/candles/utils"
-import { performanceTracker } from "@services/performanceTracker"
+import { performanceTracker } from "@modules/services/performanceTracker"
 import { Channel } from "../types/Channels"
 
 export const handleCandlesData = (parsedData: any[], subscription: any, dispatch: any) => {
