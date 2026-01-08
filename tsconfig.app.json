@@ -21,8 +21,7 @@
     "paths": {
       "@core/*": ["./src/core/*"],
       "@modules/*": ["./src/modules/*"],
-      "@theme/*": ["./src/theme/*"],
-      "@services/*": ["./src/services/*"]
+      "@theme/*": ["./src/theme/*"]
     },
 
     /* Linting */

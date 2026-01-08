@@ -1,4 +1,4 @@
-import { performanceTracker } from "@services/performanceTracker"
+import { performanceTracker } from "@modules/services/performanceTracker"
 import { bookSnapshotReducer, bookUpdateReducer } from "../../../modules/book/slice"
 import { Channel } from "../types/Channels"
 

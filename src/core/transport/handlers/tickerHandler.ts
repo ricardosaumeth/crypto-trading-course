@@ -1,4 +1,4 @@
-import { performanceTracker } from "@services/performanceTracker"
+import { performanceTracker } from "@modules/services/performanceTracker"
 import { updateTicker } from "@modules/tickers/slice"
 import { Channel } from "../types/Channels"
 
