@@ -20,6 +20,7 @@ import DepthChart from "@modules/book/components/DepthChart"
 import Book from "@modules/book/components/Book"
 import Market from "@modules/tickers/components/Market"
 import Tickers from "@modules/tickers/components/Tickers"
+import PerformanceDashboard from "./modules/PerformanceDashboard"
 
 const store = getStore()
 
@@ -52,10 +53,7 @@ const AppContent = () => {
         <DepthPanel>
           <DepthChart />
         </DepthPanel>
-        <Footer>
-          <span>Latency</span>
-          <span>Diagnostic</span>
-        </Footer>
+        <Footer>{import.meta.env.DEV && <PerformanceDashboard />}</Footer>
       </Content>
     </Container>
   )

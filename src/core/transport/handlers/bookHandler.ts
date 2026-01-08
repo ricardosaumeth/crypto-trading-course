@@ -1,6 +1,10 @@
-import { bookSnapshotReducer, bookUpdateReducer } from "@modules/book/slice"
+import { performanceTracker } from "@services/performanceTracker"
+import { bookSnapshotReducer, bookUpdateReducer } from "../../../modules/book/slice"
+import { Channel } from "../types/Channels"
 
 export const handleBookData = (parsedData: any[], subscription: any, dispatch: any) => {
+  const startTime = performance.now()
+
   const currencyPair = subscription.request.symbol.slice(1)
   if (Array.isArray(parsedData[1][0])) {
     // Snapshot
@@ -11,4 +15,8 @@ export const handleBookData = (parsedData: any[], subscription: any, dispatch: a
     const [, order] = parsedData
     dispatch(bookUpdateReducer({ currencyPair, order }))
   }
+
+  const processingTime = performance.now() - startTime
+  performanceTracker.updateLatency(Channel.BOOK, processingTime)
+  console.log(`Book processing: ${processingTime.toFixed(2)}ms`)
 }
